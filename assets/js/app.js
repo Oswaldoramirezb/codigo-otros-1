@@ -1,17 +1,18 @@
 const baseEndpoint = 'https://api.github.com';
 const usersEndpoint = `${baseEndpoint}/users`;
-const $name = document.querySelector('name'); //La variables no coinciden con los elementos, la recomendación es que siempre se ocupen nombres de variables con nombres completos, no ocupar n, a, b, c, tienen que ser mas descriptivas
-const $blog = document.querySelector('#blog');
-const $location = document.querySelector('.location');
+const $name = document.getElementById('name'); //Ponemos getelementbyid porque es un solo elemento
+const $blog = document.getElementById('blog');
+const $location = document.getElementById('location');
 
 async function displayUser(username) { //necesitamos agregar el async porque ocupamos await
   try {
     $name.textContent = 'cargando...'; //acomodo las variables de name, blog y location como aparecen arriba
     const response = await fetch(`${usersEndpoint}/${username}`);
-    console.log(data);
-    $name.textContent = '${data.name}';
-    $blog.textContent = '${data.blog}';
-    $location.textContent = '${data.location}';
+    //(console.log(data);
+    const data = await response.json(); //Cambiamos el console.log por el data para convertir a json
+    $name.textContent = data.name; // Le quitamos las comillas y llaves
+    $blog.textContent = data.blog; // Le quitamos las comillas y llaves
+    $location.textContent = data.location;// Le quitamos las comillas y llaves
   } catch (error) {
     handleError(error); //No estaba llamando antes en ningun momento si habia error
   }
